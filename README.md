@@ -1,0 +1,4 @@
+- appli web (api laravel, Angular)
+- gestion user crud (nom, prenom, post_entreprise)
+- role: admin, moderator, user
+- gestion stock (optionnel fonction timming)
