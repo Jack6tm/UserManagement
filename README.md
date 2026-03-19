@@ -2,3 +2,7 @@
 - gestion user crud (nom, prenom, post_entreprise)
 - role: admin, moderator, user
 - gestion stock (optionnel fonction timming)
+
+
+laravel : composer run dev
+Angular : npm run start
