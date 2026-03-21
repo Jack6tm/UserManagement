@@ -12,9 +12,9 @@ import { CommonModule } from '@angular/common';
   imports: [
     RouterOutlet,
     CommonModule,
+    Loader,
     Navbar,
     Footer,
-    Loader
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
