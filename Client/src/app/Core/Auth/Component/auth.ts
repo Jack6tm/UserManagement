@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../Service/auth';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
+import { AuthService } from '../Service/auth';
 
 @Component({
   selector: 'app-auth',

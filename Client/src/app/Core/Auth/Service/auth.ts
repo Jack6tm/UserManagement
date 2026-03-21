@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AuthInterface } from '../Interface/auth';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { HttpSvc } from '../../../Shared/Services/http-svc';
+import { HttpSvc } from './http-svc';
+import { AuthInterface } from '../Interface/auth';
 
 @Injectable({
   providedIn: 'root',

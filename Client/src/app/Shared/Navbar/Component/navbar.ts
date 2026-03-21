@@ -22,7 +22,7 @@ export class Navbar {
   getUser() {
     return this.authSvc.user$;
   }
-  
+
   onLogout() {
     this.authSvc.logout().subscribe(() => {
       this.authSvc.removeAuthToken();

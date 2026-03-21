@@ -1,0 +1,20 @@
+<header class="bg-indigo-950 text-white h-20 flex items-center w-full">
+  <nav class="w-full flex justify-end p-3">
+    @if(isLoggedIn() | async) {
+    <div>
+      <ul class="text-center">
+        @if(getUser() | async; as user) {
+        <li>
+          {{user.name}},
+        </li>
+        }
+        <li>
+          <button class="text-red-600 cursor-pointer border p-2 rounded-lg" (click)='onLogout()'>
+            Déconnexion
+          </button>
+        </li>
+      </ul>
+    </div>
+    }
+  </nav>
+</header>
