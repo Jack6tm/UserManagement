@@ -11,7 +11,10 @@ import { HttpSvc } from '../../../Core/Auth/Service/http-svc';
 
 export class UserService extends HttpSvc implements UserInterface {
   private _usersSubject = new BehaviorSubject<Array<any>>([]);
+  private _usersCountSubject = new BehaviorSubject<Number>(0);
+  private static API_PATH = "/users";
   public user$ = this._usersSubject.asObservable();
+  public usersCount$ = this._usersCountSubject.asObservable();
 
   constructor(private http: HttpClient) {
     super();
@@ -19,12 +22,13 @@ export class UserService extends HttpSvc implements UserInterface {
 
   public getAll(): Observable<any> {
     return this.http.get(
-      `${this.apiUrl}/users`,
+      `${this.apiUrl}${UserService.API_PATH}`,
       { headers: this.httpHeader() }
     ).pipe(
       tap((users: any)  => {
-        console.log(users.member);
-        this._usersSubject.next(users.member);
+        console.log(users.data);
+        this._usersSubject.next(users.data);
+        this._usersCountSubject.next(users.data.length);
       }));
   }
 }

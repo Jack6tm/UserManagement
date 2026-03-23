@@ -1,6 +1,6 @@
 <div class="flex">
   <app-aside-menu></app-aside-menu>
   @for(user of users$ | async; track user) {
-  {{ user.name }} - 
+  {{ user.name }} - {{user.role[0].name}}
   }
 </div>
