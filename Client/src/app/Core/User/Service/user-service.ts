@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserInterface } from '../Interface/user-interface';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { HttpSvc } from '../../../Core/Auth/Service/http-svc';
+import { HttpSvc } from '../../Auth/Service/http-svc';
 
 @Injectable({
   providedIn: 'root',

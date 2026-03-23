@@ -1,0 +1,37 @@
+<div class="flex">
+  <app-aside-menu></app-aside-menu>
+  <div class="flex flex-col">
+    <div class="w-full bg-indigo-900 p-3 flex justify-end text-white">
+      <app-open-dialog [name]="'Ajouter un utilisateur'"></app-open-dialog>
+    </div>
+    <div class="grid grid-cols-4 gap-3 p-5">
+      @for(user of users$ | async; track user) {
+      <div class="flex flex-col w-full border h-fit p-5 rounded-2xl">
+        <h2 class="tracking-widest text-2xl">{{ user.name }}</h2>
+        <div class="bg-amber-600 w-fit px-3 py-1 rounded-full">
+          {{user.role[0].name}}
+        </div>
+        <div class="">
+          <span class="text-indigo-900 font-bold">Email : </span>{{user.email}}
+        </div>
+        <div>
+          <span class="text-indigo-900 font-bold">Date de création : </span>{{user.created_at}}
+        </div>
+        <div>
+          <span class="text-indigo-900 font-bold">Date de mise à jour : </span>{{user.updated_at}}
+        </div>
+        <div class="flex justify-around">
+          <div>
+            <fa-icon [icon]="faPen"></fa-icon>
+            <app-open-dialog [name]="'Editer'" [user]="user"></app-open-dialog>
+          </div>
+          <button type="button" class="bg-red-700 text-white px-3 py-2 rounded-2xl" (click)="onDeleteUser(user.id)">
+            <fa-icon [icon]="faDelete"></fa-icon>
+            Supprimer
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AsideMenu } from '../../../Shared/AsideMenu/Component/aside-menu/aside-menu';
-import { UserService } from '../../../Shared/Users/Service/user-service';
 import { Observable } from 'rxjs';
+import { UserService } from '../../../Core/User/Service/user-service';
 
 @Component({
   selector: 'app-dashboard',
