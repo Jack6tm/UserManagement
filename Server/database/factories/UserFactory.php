@@ -41,7 +41,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->lastName(),
             'first_name' => fake()->firstName(),
-            'Company_position' => fake()->randomElement($jobTitles),
+            'company_position' => fake()->randomElement($jobTitles),
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
         ];
