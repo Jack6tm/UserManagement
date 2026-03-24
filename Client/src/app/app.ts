@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './Shared/Navbar/Component/navbar';
 import { Footer } from './Shared/Footer/Component/footer';
@@ -20,9 +20,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.css'
 })
 export class App {
-  loading$: Observable<Boolean>;
+  private loaderSvc:LoaderService = inject(LoaderService);
 
-  constructor(private loaderSvc: LoaderService) {
-    this.loading$ = this.loaderSvc.isLoading$;
-  }
+  loading$ = this.loaderSvc.isLoading$;
 }

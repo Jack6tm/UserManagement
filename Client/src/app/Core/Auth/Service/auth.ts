@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HttpSvc } from './http-svc';
 import { AuthInterface } from '../Interface/auth';
+import { UserElement } from '../../User/Interface/user-element';
 
 @Injectable({
   providedIn: 'root',
@@ -50,11 +51,7 @@ export class AuthService extends HttpSvc implements AuthInterface {
   }
 
   getMe() {
-    return this.http.get(`${this.apiUrl}/me`, { headers: this.httpHeader() }).pipe(
-      tap(user => {
-        this._userSubject.next(user);
-      })
-    );
+    return this.http.get<UserElement>(`${this.apiUrl}/me`, { headers: this.httpHeader() });
   }
 
   isAuth() {

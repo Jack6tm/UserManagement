@@ -11,8 +11,8 @@
       </div>
       <div class="my-2">
         <h2 class="text-4xl font-bold"><span>
-            @if(usersCount$ | async; as countUser) {
-            {{countUser}}
+            @if(users$ | async; as users){
+              {{users.data.length}}
             }
           </span> +</h2>
       </div>

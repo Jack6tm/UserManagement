@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../Core/Auth/Service/auth';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -11,20 +11,10 @@ import { Observable } from 'rxjs';
   styleUrl: './navbar.css',
 })
 export class Navbar {
-  public user$: Observable<any>;
-
-  constructor(private authSvc: AuthService,
-    private router: Router) {
-    this.user$ = this.authSvc.user$;
-  }
-
-  isLoggedIn() {
-    return this.authSvc.isLoggedIn$;
-  }
-
-  getUser() {
-    return this.authSvc.user$;
-  }
+  private authSvc: AuthService = inject(AuthService);
+  private router: Router = inject(Router);
+  public user$ = this.authSvc.getMe();
+  public isLoggedIn$ = this.authSvc.isLoggedIn$;
 
   onLogout() {
     this.authSvc.logout().subscribe(() => {

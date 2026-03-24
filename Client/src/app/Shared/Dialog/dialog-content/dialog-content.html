@@ -1,22 +1,57 @@
 <mat-dialog-content class="mat-typography">
   @if(data.user) {
-    <h2 mat-dialog-title>Edition de l'utilisateur {{data.user.name}}</h2>
+  <h2 mat-dialog-title>Edition de l'utilisateur {{data.user.name}}</h2>
   } @else {
-    <h2 mat-dialog-title>Création d'un utilisateur</h2>
+  <h2 mat-dialog-title>Création d'un utilisateur</h2>
   }
 
   <form class="example-form">
-  <mat-form-field class="w-full">
-    <mat-label>Email</mat-label>
-    <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
-    @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
-      <mat-error>Please enter a valid email address</mat-error>
-    }
-    @if (emailFormControl.hasError('required')) {
-      <mat-error>Email is <strong>required</strong></mat-error>
-    }
-  </mat-form-field>
-</form>
+    <mat-form-field class="w-full">
+      <mat-label>Nom</mat-label>
+      <input name="name" matInput [formControl]="nameFormControl" placeholder="Ex. Doe">
+      @if (nameFormControl.hasError('required')) {
+      <mat-error>Le nom <strong>est requis</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Prénom</mat-label>
+      <input name="first_name" matInput [formControl]="firstNameFormControl" placeholder="Ex. Jhon">
+      @if (firstNameFormControl.hasError('required')) {
+      <mat-error>Le prénom <strong>est requis</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Poste occupé</mat-label>
+      <input name="company_position" matInput [formControl]="companyPositionFormControl"
+        placeholder="Ex. Full stack développeur">
+      @if (companyPositionFormControl.hasError('required')) {
+      <mat-error>Le poste occupé <strong>est requis</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
+      @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+      <mat-error>Entrer une adresse email valide</mat-error>
+      }
+      @if (emailFormControl.hasError('required')) {
+      <mat-error>L'email <strong>est requis</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Séléctionner le role</mat-label>
+      @let roles = roles$ | async;
+      <mat-select [formControl]="roleFormControl">
+        <mat-option>None</mat-option>
+        @for(role of roles; track role) {
+          <mat-option value="role.name">{{role.name}}</mat-option>
+        }
+      </mat-select>
+      @if (roleFormControl.hasError('required')) {
+      <mat-error>Le role <strong>est requis</strong></mat-error>
+      }
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button matButton mat-dialog-close>Annuler</button>
