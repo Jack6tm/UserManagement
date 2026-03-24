@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use League\CommonMark\Util\ArrayCollection;
 
 /**
  * @extends Factory<User>
@@ -24,8 +25,23 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $jobTitles = new ArrayCollection([
+            "Développeur backend",
+            "Développeur frontend",
+            "Fullstack",
+            "Chef de projet",
+            "Product Owner",
+            "UX Designer",
+            "DevOps",
+            "QA Engineer",
+            "Data Analyst",
+            "Architecte logiciel"
+        ]);
+
         return [
-            'name' => fake()->name(),
+            'name' => fake()->lastName(),
+            'first_name' => fake()->firstName(),
+            'Company_position' => fake()->randomElement($jobTitles),
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
         ];
