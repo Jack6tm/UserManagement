@@ -5,7 +5,7 @@
   <h2 mat-dialog-title>Création d'un utilisateur</h2>
   }
 
-  <form class="example-form">
+  <form class="example-form" >
     <mat-form-field class="w-full">
       <mat-label>Nom</mat-label>
       <input name="name" matInput [formControl]="nameFormControl" placeholder="Ex. Doe">
@@ -39,12 +39,22 @@
       }
     </mat-form-field>
     <mat-form-field class="w-full">
+      <mat-label>Mot de passe</mat-label>
+      <input type="password" matInput [formControl]="passwordFormControl">
+      @if (!passwordFormControl.hasError('required')) {
+      <mat-error>Le mot de passe <strong>est requis</strong></mat-error>
+      }
+      @if (emailFormControl.hasError('required')) {
+      <mat-error>L'email <strong>est requis</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full">
       <mat-label>Séléctionner le role</mat-label>
       @let roles = roles$ | async;
       <mat-select [formControl]="roleFormControl">
         <mat-option>None</mat-option>
         @for(role of roles; track role) {
-          <mat-option value="role.name">{{role.name}}</mat-option>
+        <mat-option value="{{role.id}}">{{role.name}}</mat-option>
         }
       </mat-select>
       @if (roleFormControl.hasError('required')) {
@@ -55,5 +65,10 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button matButton mat-dialog-close>Annuler</button>
-  <button matButton [mat-dialog-close]="true" cdkFocusInitial>Valider</button>
+
+  @if(data.user) {
+  <button matButton [mat-dialog-close]="true" cdkFocusInitial (click)="onUpdateItem(data.user.id)">Valider</button>
+  } @else {
+  <button matButton [mat-dialog-close]="true" cdkFocusInitial (click)="onCreateItem()">Valider</button>
+  }
 </mat-dialog-actions>

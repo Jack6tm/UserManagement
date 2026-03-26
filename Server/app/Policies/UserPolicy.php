@@ -29,6 +29,10 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
+
+        if ($user->roles->pluck('name')->contains(UserRoles::ADMIN->name)) {
+            return true;
+        }
         return false;
     }
 
@@ -37,6 +41,13 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
+        if (
+            $user->roles->pluck('name')->contains(UserRoles::ADMIN->name) ||
+            $user->roles->pluck('name')->contains(UserRoles::MODERATOR->name) ||
+            $user->id == $model->id
+        ) {
+            return true;
+        }
         return false;
     }
 
@@ -45,9 +56,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        $adminRole = UserRoles::ADMIN->name;
-
-        if ($adminRole == $user->roles[0]->name || $user->id == $model->id) {
+        if ($user->roles->pluck('name')->contains(UserRoles::ADMIN->name) || $user->id == $model->id) {
             return true;
         }
         return false;

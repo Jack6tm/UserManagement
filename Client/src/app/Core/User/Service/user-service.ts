@@ -1,7 +1,6 @@
-import { computed, inject, Injectable } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { inject, Injectable } from '@angular/core';
 import { UserInterface } from '../Interface/user-interface';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HttpSvc } from '../../Auth/Service/http-svc';
 
@@ -38,6 +37,20 @@ export class UserService extends HttpSvc implements UserInterface {
     return this.http.delete(
       `${this.apiUrl}${UserService.API_PATH}/${id}`,
       { headers: this.httpHeader() }
+    );
+  }
+
+  public update(id: Number, email: string, password: string, name: string, firstName: string, companyPosition: string, role: Array<any>) {
+    return this.http.put(
+      `${this.apiUrl}${UserService.API_PATH}/${id}`,
+      {email, password, name, "first_name":firstName, "company_position": companyPosition, "role": role}
+    );
+  }
+
+    public create(email: string, password: string, name: string, firstName: string, companyPosition: string, role: Array<any>) {
+    return this.http.post(
+      `${this.apiUrl}${UserService.API_PATH}`,
+      {email, password, name, "first_name":firstName, "company_position": companyPosition, "role": role}
     );
   }
 }

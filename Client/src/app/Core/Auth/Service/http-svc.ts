@@ -12,6 +12,8 @@ export abstract class HttpSvc {
 
   httpHeader(): { [header: string]: string } {
     const token = this.getAuthToken();
-    return token ? { Authorization: `Bearer ${token}` } : {};
+    return token ? {
+      Authorization: `Bearer ${token}`,
+    } : {};
   }
 }

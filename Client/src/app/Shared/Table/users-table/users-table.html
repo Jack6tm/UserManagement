@@ -33,8 +33,6 @@
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let element">
       <app-open-dialog [name]="'Edition'" [user]="element"></app-open-dialog>
-
-
       <button mat-button (click)="onDeleteItem(element.id)">Suppression</button>
     </td>
   </ng-container>
