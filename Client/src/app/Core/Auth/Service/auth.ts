@@ -1,5 +1,5 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HttpSvc } from './http-svc';
 import { AuthInterface } from '../Interface/auth';
@@ -38,7 +38,9 @@ export class AuthService extends HttpSvc implements AuthInterface {
         localStorage.setItem(this.tokenKey, res.token);
         this._isLoggedIn$.next(true);
         this.getMe().subscribe((user) => this.currentUser.set(user));
-      })
+      }),
+      switchMap(() => this.getMe()),
+      tap(user => this.currentUser.set(user))
     );
   }
 

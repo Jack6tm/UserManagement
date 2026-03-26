@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal, signal } from '@angular/core';
 import { Loader } from '../Interface/loader';
 import { BehaviorSubject } from 'rxjs';
 
