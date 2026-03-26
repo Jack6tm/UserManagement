@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 export class Navbar {
   private authSvc: AuthService = inject(AuthService);
   private router: Router = inject(Router);
-  public user$ = this.authSvc.getMe();
+  public user = this.authSvc.currentUser;
   public isLoggedIn$ = this.authSvc.isLoggedIn$;
 
   onLogout() {

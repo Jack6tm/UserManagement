@@ -9,11 +9,9 @@ import { UserElement } from '../../User/Interface/user-element';
   providedIn: 'root',
 })
 export class AuthService extends HttpSvc implements AuthInterface {
-  private _userSubject = new BehaviorSubject<any>(null);
   private _isLoggedIn$ = new BehaviorSubject<boolean>(!!this.getAuthToken());
-
-  user$ = this._userSubject.asObservable();
-  isLoggedIn$ = this._isLoggedIn$.asObservable();
+  public currentUser = signal<any>(null);
+  public isLoggedIn$ = this._isLoggedIn$.asObservable();
 
   constructor(private http: HttpClient) {
     super();
@@ -21,8 +19,11 @@ export class AuthService extends HttpSvc implements AuthInterface {
       this.getMe().subscribe({
         error: (err) => {
           console.error('getMe error:', err);
-          this._userSubject.next(null);
+          this.currentUser.set(null);
           this._isLoggedIn$.next(false);
+        },
+        next: (usr) => {
+          this.currentUser.set(usr);
         }
       });
     }
@@ -36,14 +37,14 @@ export class AuthService extends HttpSvc implements AuthInterface {
       tap((res: any) => {
         localStorage.setItem(this.tokenKey, res.token);
         this._isLoggedIn$.next(true);
-        this.getMe().subscribe();
+        this.getMe().subscribe((user) => this.currentUser.set(user));
       })
     );
   }
 
   logout() {
-    this._userSubject.next(null);
     this._isLoggedIn$.next(false);
+    this.currentUser.set(null);
     return this.http.post(
       `${this.apiUrl}/logout`,
       {}
@@ -58,7 +59,7 @@ export class AuthService extends HttpSvc implements AuthInterface {
     const token = this.getAuthToken();
     if (!token) {
       this._isLoggedIn$.next(false);
-      this._userSubject.next(null);
+      this.currentUser.set(null);
       return false;
     }
     try {

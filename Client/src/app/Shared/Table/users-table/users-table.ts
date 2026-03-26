@@ -1,10 +1,11 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { UserService } from '../../../Core/User/Service/user-service';
 import { MatButtonModule } from '@angular/material/button';
-import { CommonModule } from '@angular/common';
 import { UserElement } from '../../../Core/User/Interface/user-element';
 import { OpenDialog } from '../../Dialog/open-dialog/open-dialog';
+import { AuthService } from '../../../Core/Auth/Service/auth';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,6 +17,9 @@ import { OpenDialog } from '../../Dialog/open-dialog/open-dialog';
 export class UsersTable implements OnInit {
 
   private userSvc = inject(UserService);
+  private authSvc = inject(AuthService);
+  private router = inject(Router);
+
   public displayedColumns: string[] = ['id', 'name', 'first_name', 'company_position', 'email', "role", "actions"];
   public dataSource: UserElement[] = [];
 
@@ -33,6 +37,19 @@ export class UsersTable implements OnInit {
   }
 
   public onDeleteItem(id: Number): void {
-    this.userSvc.delete(id).subscribe();
+    if (window.confirm('Voulez-vous vraiment supprimer cet utilisateur ?')) {
+      if (this.authSvc.currentUser().id == id) {
+        if(window.confirm("Il s’agit de vous-même. Cette action est irréversible. Voulez-vous continuer ?")) {
+          this.userSvc.delete(id).subscribe(() => {
+            this.authSvc.removeAuthToken();
+            this.router.navigate(['/login']);
+          });
+        }
+        return;
+      } else {
+        this.userSvc.delete(id).subscribe();
+      }
+      return;
+    }
   }
 }

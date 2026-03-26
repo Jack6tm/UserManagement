@@ -6,6 +6,7 @@ import { Loader } from './Core/Loader/Component/loader';
 import { Observable } from 'rxjs';
 import { LoaderService } from './Core/Loader/Service/loader';
 import { CommonModule } from '@angular/common';
+import { Toast } from './Core/Toast/Component/toast/toast';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { CommonModule } from '@angular/common';
     Loader,
     Navbar,
     Footer,
+    Toast
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'

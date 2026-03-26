@@ -1,0 +1,8 @@
+@if(show()) {
+  <div class="absolute top-21 right-1 p-5 bg-red-300 z-999 rounded-xl shadow-2xl select-none" (click)="onHide()">
+    <div class="flex items-center">
+      <fa-icon [icon]="faClose" class="text-red-700 text-3xl"></fa-icon>
+      <p class="tracking-widest font-bold">{{message()}}</p>
+    </div>
+  </div>
+}
